@@ -1,0 +1,52 @@
+<div th:fragment="modalPatio(patio)">
+    <div class="modal fade" id="addPatioModal" tabindex="-1" aria-labelledby="addPatioLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-green-600 text-white">
+                    <h5 class="modal-title">Adicionar Novo Pátio</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{/patios}" th:object="${patio}" method="post">
+                        <div class="mb-3">
+                            <label for="nome" class="form-label">Nome do Pátio</label>
+                            <input type="text" class="form-control" id="nome" th:field="*{nome}" placeholder="Digite o nome do pátio" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="cep" class="form-label">CEP</label>
+                            <input type="text" class="form-control" id="cep" th:field="*{endereco.cep}" placeholder="00000-000" pattern="^\d{5}-?\d{3}$" max="9">
+                        </div>
+                        <div class="mb-3">
+                            <label for="logradouro" class="form-label">Logradouro</label>
+                            <input type="text" class="form-control" id="logradouro" th:field="*{endereco.logradouro}" placeholder="Rua/Avenida">
+                        </div>
+                        <div class="mb-3">
+                            <label for="numero" class="form-label">Número</label>
+                            <input type="number" class="form-control" id="numero" th:field="*{endereco.numero}" placeholder="Número"> </div>
+                        <div class="mb-3">
+                            <label for="cidade" class="form-label">Cidade</label>
+                            <input type="text" class="form-control" id="cidade" th:field="*{endereco.cidade}" placeholder="Cidade">
+                        </div>
+                        <div class="mb-3">
+                            <label for="bairro" class="form-label">Bairro</label>
+                            <input type="text" class="form-control" id="bairro" th:field="*{endereco.bairro}" placeholder="Cidade">
+                        </div>
+                        <div class="mb-3">
+                            <label for="estado" class="form-label">Estado</label>
+                            <input type="text" class="form-control" id="estado" th:field="*{endereco.estado}" placeholder="Estado">
+                        </div>
+                        <div class="mb-3">
+                            <label for="pais" class="form-label">Pais</label>
+                            <input type="text" class="form-control" id="pais" th:field="*{endereco.pais}" placeholder="Pais">
+                        </div>
+                        <div class="mb-3">
+                            <label for="lotacao" class="form-label">Lotação</label>
+                            <input type="number" class="form-control" id="lotacao" th:field="*{lotacao}" placeholder="Pais">
+                        </div>
+                        <button type="submit" class="btn btn-success w-full">Salvar Pátio</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

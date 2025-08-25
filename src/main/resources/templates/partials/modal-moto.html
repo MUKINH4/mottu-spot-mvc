@@ -1,0 +1,46 @@
+<div th:fragment="modalMoto(moto)">
+    <div class="modal fade" id="addMotoModal" tabindex="-1" aria-labelledby="addMotoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- Cabeçalho -->
+                <div class="modal-header bg-green-600 text-white">
+                    <h5 class="modal-title">Adicionar Nova Moto</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Corpo -->
+                <div class="modal-body">
+                    <form th:action="@{/motos}" th:object="${moto}" method="post">
+                        <input type="hidden" name="patioId" th:value="${patio.id}"/>
+                        <!-- Placa -->
+                        <div class="mb-3">
+                            <label for="placa" class="form-label">Placa</label>
+                            <input type="text" class="form-control" id="placa" th:field="*{placa}" placeholder="ABC-1234" required>
+                        </div>
+
+                        <!-- Descrição -->
+                        <div class="mb-3">
+                            <label for="descricao" class="form-label">Descrição</label>
+                            <textarea class="form-control" id="descricao" rows="3" th:field="*{descricao}" placeholder="Descrição da moto"></textarea>
+                        </div>
+
+                        <!-- Status -->
+                        <div class="mb-3">
+                            <label for="status" class="form-label">Status</label>
+                            <select class="form-select" id="status" th:field="*{status}" required>
+                                <option selected disabled value="">Selecione</option>
+                                <option value="ATIVO">Ativo</option>
+                                <option value="INATIVO">Inativo</option>
+                            </select>
+                        </div>
+                        <!-- Botão -->
+                        <button type="submit" class="btn btn-success w-full">Salvar Moto</button>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

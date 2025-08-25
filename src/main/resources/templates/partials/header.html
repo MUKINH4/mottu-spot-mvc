@@ -1,6 +1,9 @@
 <header th:fragment="header" class="bg-green-600 text-white p-4 shadow-md">
     <div class="container mx-auto flex justify-between items-center">
-        <h1 class="text-2xl font-bold">Mottu Spot</h1>
-        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addPatioModal">Adicionar Pátio</button>
+        <a href="/" class="text-2xl font-bold">Mottu Spot</a>
+        <button class="btn btn-success"
+                th:attr="data-bs-target=${headerAction == 'patio'} ? '#addPatioModal' : '#addMotoModal', data-bs-toggle='modal'"
+                th:text="${headerAction == 'patio'} ? 'Adicionar Pátio' : 'Adicionar Moto'">
+        </button>
     </div>
 </header>

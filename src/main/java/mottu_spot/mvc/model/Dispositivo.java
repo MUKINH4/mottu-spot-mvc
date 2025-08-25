@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Entity
 @Data
 @Builder
@@ -14,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class Dispositivo {
 
     @Id @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    private UUID id;
 
     @Builder.Default
     private boolean ativo = false;

@@ -5,6 +5,7 @@ import mottu_spot.mvc.repository.PatioRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PatioService {
@@ -17,6 +18,10 @@ public class PatioService {
 
     public List<Patio> listarPatios() {
         return patioRepository.findAll();
+    }
+    public Patio encontrarPatio(Long id){
+        return patioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Patio no encontrado"));
     }
 
     public Patio salvarPatio(Patio patio) {

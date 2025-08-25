@@ -11,9 +11,16 @@
     </div>
 
     <div class="mt-3 flex gap-2">
-        <a th:href="@{/patios/edit/{id}(id=${id})}" class="btn btn-sm btn-warning">Editar</a>
-        <button id="btn-delete" class="btn btn-sm btn-danger"
-           th:onclick="deletarPatio([[${patio.id}]])">Excluir</button>
+        <div>
+            <a th:href="@{/patios/edit/{id}(id=${id})}" class="btn btn-sm btn-warning">Editar</a>
+        </div>
+        <div>
+            <button id="btn-delete" class="btn btn-sm btn-danger"
+               th:onclick="deletarPatio([[${patio.id}]])">Excluir</button>
+        </div>
+        <div>
+            <a th:href="@{/patios/{id}(id=*{id})}">Acessar Pátio</a>
+        </div>
     </div>
 <script>
 

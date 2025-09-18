@@ -36,4 +36,12 @@ public class MotoController {
         return "redirect:/patios/" + patioId;
     }
 
+    @GetMapping("/adicionarMoto")
+    public String adicionarMoto(@RequestParam Long patioId, Model model) {
+        Patio patio = patioService.encontrarPatio(patioId);
+        model.addAttribute("patio", patio);
+        model.addAttribute("moto", new Moto());
+        return "adicionarMoto";
+    }
+
 }

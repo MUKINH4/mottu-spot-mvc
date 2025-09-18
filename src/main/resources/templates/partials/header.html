@@ -1,9 +1,10 @@
-<header th:fragment="header" class="bg-green-600 text-white p-4 shadow-md">
+<header th:fragment="header(patio)" class="bg-green-600 text-white p-4 shadow-md">
     <div class="container mx-auto flex justify-between items-center">
-        <a href="/" class="text-2xl font-bold">Mottu Spot</a>
-        <button class="btn btn-success"
-                th:attr="data-bs-target=${headerAction == 'patio'} ? '#addPatioModal' : '#addMotoModal', data-bs-toggle='modal'"
-                th:text="${headerAction == 'patio'} ? 'Adicionar Pátio' : 'Adicionar Moto'">
-        </button>
+        <a href="/" class="text-2xl font-bold">
+            MottuSpot
+        </a>
+        <a th:if="${patio == null}" href="/adicionarPatio">Adicionar pátio</a>
+        <a th:if="${patio != null}" th:href="@{/motos/adicionarMoto(patioId=${id})}">Adicionar moto</a>
+
     </div>
 </header>

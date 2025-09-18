@@ -1,6 +1,7 @@
 package mottu_spot.mvc.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
@@ -27,10 +28,11 @@ public class Patio {
 
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     @JoinColumn(name = "endereco_id")
+    @Valid
     private Endereco endereco;
 
-    @Positive
-    @Min(1)
+    @Positive(message = "O número deve ser positivo")
+    @Min(value = 1, message = "O valor mínimo é 1")
     private int lotacao;
 
     @Builder.Default

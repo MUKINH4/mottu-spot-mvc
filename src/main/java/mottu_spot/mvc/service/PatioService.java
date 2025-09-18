@@ -1,11 +1,11 @@
 package mottu_spot.mvc.service;
 
-import mottu_spot.mvc.model.Patio;
-import mottu_spot.mvc.repository.PatioRepository;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import mottu_spot.mvc.model.Patio;
+import mottu_spot.mvc.repository.PatioRepository;
 
 @Service
 public class PatioService {
@@ -30,5 +30,9 @@ public class PatioService {
 
     public void deletePatio(Long id) {
         patioRepository.deleteById(id);
+    }
+
+    public Patio editarPatio(Long id, Patio patio) {
+        return patioRepository.save(patio);
     }
 }

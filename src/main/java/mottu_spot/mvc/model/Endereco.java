@@ -30,8 +30,8 @@ public class Endereco {
     @NotBlank(message = "logradouro não pode ser nulo")
     private String logradouro;
 
-    @Positive
-    @Min(1)
+    @Positive(message = "O número deve ser positivo")
+    @Min(value = 1, message = "O valor mínimo é 1")
     private int numero;
 
     @NotBlank(message = "bairro não pode ser nulo")

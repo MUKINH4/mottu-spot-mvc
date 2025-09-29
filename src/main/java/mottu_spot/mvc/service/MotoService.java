@@ -27,4 +27,17 @@ public class MotoService {
         return motoRepository.save(moto);
     }
 
+    public Moto encontrarMoto(Long id) {
+        return motoRepository.findById(id).orElseThrow(() ->
+            new RuntimeException("Moto não encontrada com id: " + id));
+    }
+
+    public Moto atualizarMoto(Moto moto) {
+        return motoRepository.save(moto);
+    }
+
+    public void deletarMoto(Long id) {
+        motoRepository.deleteById(id);
+    }
+
 }

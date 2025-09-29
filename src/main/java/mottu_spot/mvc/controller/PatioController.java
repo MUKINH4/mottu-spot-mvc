@@ -2,6 +2,7 @@ package mottu_spot.mvc.controller;
 
 import java.util.List;
 
+import mottu_spot.mvc.model.Endereco;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,7 +43,9 @@ public class PatioController {
 
     @GetMapping("/adicionarPatio")
     public String adicionarPatio(Model model) {
-        // Não passa patio para o header, garante que será null
+        Patio patio = new Patio();
+        patio.setEndereco(new Endereco());
+        model.addAttribute("patio", patio);
         return "adicionarPatio";
     }
 
@@ -72,20 +75,29 @@ public class PatioController {
         return "redirect:/";
     }
 
-    @DeleteMapping("/patios/delete/{id}")
-    public ResponseEntity<Void> deletarPatio(@PathVariable Long id) {
-        patioService.deletePatio(id);
-        return ResponseEntity.ok().build();
+    @GetMapping("/patios/edit/{id}")
+    public String editarPatioForm(@PathVariable Long id, Model model) {
+        Patio patio = patioService.encontrarPatio(id);
+        model.addAttribute("patio", patio);
+        return "editarPatio";
     }
-    
-    @PutMapping("/patios/edit/{id}")
+
+    @PostMapping("/patios/edit/{id}")
     public String editarPatio(@PathVariable Long id, @Valid @ModelAttribute Patio patio, BindingResult result, RedirectAttributes redirect) {
         if (result.hasErrors()) {
-            return "index";
+            return "editarPatio";
         }
-
+        patio.setId(id);
         patioService.editarPatio(id, patio);
         redirect.addFlashAttribute("message", "Pátio editado com sucesso");
         return "redirect:/";
     }
+
+    @GetMapping("/patios/delete/{id}")
+    public String deletarPatio(@PathVariable Long id, RedirectAttributes redirect) {
+        patioService.deletePatio(id);
+        redirect.addFlashAttribute("message", "Pátio excluído com sucesso");
+        return "redirect:/";
+    }
+
 }

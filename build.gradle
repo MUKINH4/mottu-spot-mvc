@@ -10,6 +10,8 @@ flyway {
     user = 'postgres'
     password = 'postgres'
     schemas = ['public']
+    locations = ['filesystem:src/main/resources/db/migration']
+    cleanDisabled = false
 }
 
 group = 'mottu-spot'
@@ -41,9 +43,9 @@ dependencies {
 	implementation 'org.flywaydb:flyway-core'
 	implementation 'org.flywaydb:flyway-database-postgresql'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+	implementation 'org.postgresql:postgresql'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    implementation 'org.postgresql:postgresql'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'

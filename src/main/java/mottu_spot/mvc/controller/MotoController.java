@@ -44,4 +44,31 @@ public class MotoController {
         return "adicionarMoto";
     }
 
+    @GetMapping("/edit/{id}")
+    public String editarMotoForm(@PathVariable Long id, Model model) {
+        Moto moto = motoService.encontrarMoto(id);
+        Patio patio = moto.getPatio();
+        model.addAttribute("moto", moto);
+        model.addAttribute("patio", patio);
+        return "editarMoto";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String editarMoto(@PathVariable Long id, @ModelAttribute Moto moto) {
+        Moto motoExistente = motoService.encontrarMoto(id);
+        Patio patio = motoExistente.getPatio();
+        moto.setId(id);
+        moto.setPatio(patio);
+        motoService.atualizarMoto(moto);
+        return "redirect:/patios/" + patio.getId();
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deletarMoto(@PathVariable Long id) {
+        Moto moto = motoService.encontrarMoto(id);
+        Long patioId = moto.getPatio().getId();
+        motoService.deletarMoto(id);
+        return "redirect:/patios/" + patioId;
+    }
+
 }

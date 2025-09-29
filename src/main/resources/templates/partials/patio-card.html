@@ -1,5 +1,5 @@
 <div th:fragment="patioCard(patio)" th:object="${patio}"
-     class="card shadow-lg bg-white rounded-lg p-4 hover:scale-105 transition cursor-pointer">
+     class="card shadow-lg bg-white rounded-lg p-4 hover:scale-105 transition cursor-pointer" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <div class="flex justify-between">
         <div>
             <h3 class="font-bold text-lg text-green-700" th:text="*{nome}"></h3>
@@ -11,32 +11,17 @@
     </div>
 
     <div class="mt-3 flex gap-2">
-        <div>
-            <a th:href="@{/patios/edit/{id}(id=${id})}" class="btn btn-sm btn-warning">Editar</a>
+        <!-- Botões condicionais para ADMIN apenas -->
+        <div sec:authorize="hasRole('ADMIN')" class="flex gap-2">
+            <a th:href="@{/patios/edit/{id}(id=${patio.id})}" class="btn btn-sm btn-warning">Editar</a>
+            <a th:href="@{/patios/delete/{id}(id=${patio.id})}"
+               class="btn btn-sm btn-danger"
+               onclick="return confirm('Tem certeza que deseja excluir este pátio?')">Excluir</a>
         </div>
+
+        <!-- Link acessar pátio disponível para todos -->
         <div>
-            <button id="btn-delete" class="btn btn-sm btn-danger"
-               th:onclick="deletarPatio([[${patio.id}]])">Excluir</button>
-        </div>
-        <div>
-            <a th:href="@{/patios/{id}(id=*{id})}">Acessar Pátio</a>
+            <a th:href="@{/patios/{id}(id=*{id})}" class="btn btn-sm btn-primary">Acessar Pátio</a>
         </div>
     </div>
-<script>
-
-    const deletarPatio = async (id) => {
-        if (confirm("Excluir este pátio?")) {
-            await fetch(`patios/delete/${id}`, {
-                method: "DELETE"
-            }).then(response => {
-                if (response.ok) {
-                    window.location.reload()
-                }
-                }
-            ).catch(e => alert("Erro: ", e))
-        }
-    }
-
-</script>
 </div>
-

@@ -54,8 +54,9 @@ public class PatioController {
         Patio patio = patioService.encontrarPatio(id);
         List<Moto> motos = motoService.encontrarMotoPorPatio(id);
         patio.setMotos(motos);
-
+        Long patioId = patio.getId();
         model.addAttribute("patio", patio);
+        model.addAttribute("patioId", patioId);
         model.addAttribute("motos", motos);
         model.addAttribute("moto", new Moto());
         model.addAttribute("headerAction", "moto");

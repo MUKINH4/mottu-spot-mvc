@@ -14,7 +14,7 @@
     <link href="https://cdn.jsdelivr.net/npm/daisyui@2.57.0/dist/full.css" rel="stylesheet">
 </head>
 <body>
-<div th:insert="~{partials/header :: header(patio)}" th:with="patio=${patio}"></div>
+<div th:replace="~{partials/header :: header(${patio})}"></div>
 <div class="rounded-xl mb-3 text-2xl">
     <h5 class="text-center p-2 ">Editar Moto</h5>
 </div>

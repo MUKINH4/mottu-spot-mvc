@@ -6,7 +6,9 @@ import mottu_spot.mvc.service.MotoService;
 import mottu_spot.mvc.service.PatioService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/motos")
@@ -21,13 +23,20 @@ public class MotoController {
     }
 
     @GetMapping
-    public String moto(Model model){
+    public String moto(@RequestParam Long patioId, Model model){
+        Patio patio = patioService.encontrarPatio(patioId);
+        model.addAttribute("patio", patio);
         return "moto";
     }
 
-    @PostMapping
-    public String criarMoto(@ModelAttribute Moto moto, @RequestParam Long patioId) {
 
+    @PostMapping
+    public String criarMoto(@ModelAttribute Moto moto, @RequestParam Long patioId, BindingResult result, RedirectAttributes redirect) {
+        if (result.hasErrors()) {
+            redirect.addFlashAttribute("errorMessage", result.getFieldError().getDefaultMessage());
+            return "redirect:/adicionarMoto";
+        }
+        // TODO arrumar o errorMessage
         Patio patio = patioService.encontrarPatio(patioId);
 
         moto.setPatio(patio);

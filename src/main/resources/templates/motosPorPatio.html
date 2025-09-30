@@ -15,7 +15,7 @@
 
 </head>
 <body class="bg-gray-100 min-h-screen">
-<div th:insert="~{partials/header :: header(patio)}" th:with="patio=${patio}"></div>
+<div th:replace="~{partials/header :: header(${patio})}"></div>
 
 <div class="max-w-5xl mx-auto">
 

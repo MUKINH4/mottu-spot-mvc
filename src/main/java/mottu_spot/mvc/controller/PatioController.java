@@ -2,21 +2,18 @@ package mottu_spot.mvc.controller;
 
 import java.util.List;
 
-import mottu_spot.mvc.model.Endereco;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.validation.Valid;
+import mottu_spot.mvc.model.Endereco;
 import mottu_spot.mvc.model.Moto;
 import mottu_spot.mvc.model.Patio;
 import mottu_spot.mvc.service.MotoService;

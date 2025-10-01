@@ -36,7 +36,6 @@ public class MotoController {
             redirect.addFlashAttribute("errorMessage", result.getFieldError().getDefaultMessage());
             return "redirect:/adicionarMoto";
         }
-        // TODO arrumar o errorMessage
         Patio patio = patioService.encontrarPatio(patioId);
 
         moto.setPatio(patio);

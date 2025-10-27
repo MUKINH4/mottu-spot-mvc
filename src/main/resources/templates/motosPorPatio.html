@@ -30,7 +30,16 @@
              class="bg-white shadow-lg rounded-xl p-4 hover:scale-105 transition transform cursor-pointer">
             <div class="flex justify-between items-center mb-2">
                 <h2 class="text-xl font-semibold text-gray-800" th:text="${moto.placa}">ABC-1234</h2>
-                <span class="p-2 px-3 bg-gray-100 rounded-xl transition hover:bg-gray-300">Localizar</span>
+                
+                <!-- Botão Localizar/Desativar -->
+                <button 
+                    th:id="'btn-' + ${moto.id}"
+                    th:onclick="'toggleDispositivo(' + ${moto.id} + ', ' + ${moto.dispositivo?.ativo ?: false} + ')'" 
+                    th:disabled="${moto.dispositivo == null}"
+                    th:classappend="${moto.dispositivo?.ativo} ? 'bg-red-500 hover:bg-red-600' : 'bg-green-500 hover:bg-green-600'"
+                    class="p-2 px-3 text-white rounded-xl transition disabled:bg-gray-300 disabled:cursor-not-allowed">
+                    <span th:text="${moto.dispositivo?.ativo} ? 'Desativar' : 'Localizar'">Localizar</span>
+                </button>
             </div>
 
             <!-- Descrição -->
@@ -51,10 +60,15 @@
                 <span th:text="${#temporals.format(moto.dataAdicao, 'dd/MM/yyyy HH:mm')}"></span>
             </p>
 
-            <!-- Dispositivo -->
+            <!-- Dispositivo com status visual -->
             <p class="text-gray-600">
                 <span class="font-semibold">Dispositivo:</span>
-                <span th:text="${moto.dispositivo != null ? moto.dispositivo.id : '—'}"></span>
+                <span th:if="${moto.dispositivo != null}">
+                    <span th:text="${#strings.substring(moto.dispositivo.id.toString(), 0, 8)}"></span>
+                    <span th:if="${moto.dispositivo.ativo}" class="ml-2 px-2 py-1 bg-red-100 text-red-700 text-xs rounded-full">● ATIVO</span>
+                    <span th:unless="${moto.dispositivo.ativo}" class="ml-2 px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">○ Inativo</span>
+                </span>
+                <span th:unless="${moto.dispositivo != null}">—</span>
             </p>
 
             <!-- Botões condicionais para ADMIN apenas -->
@@ -69,5 +83,55 @@
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function toggleDispositivo(motoId, isAtivo) {
+        const button = document.getElementById('btn-' + motoId);
+        const originalText = button.innerHTML;
+        button.disabled = true;
+        button.innerHTML = '⏳ Processando...';
+
+        const endpoint = isAtivo ? `/api/mqtt/desativar/${motoId}` : `/api/mqtt/localizar/${motoId}`;
+
+        fetch(endpoint, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.sucesso) {
+                // Atualiza o botão
+                if (isAtivo) {
+                    button.innerHTML = 'Localizar';
+                    button.classList.remove('bg-red-500', 'hover:bg-red-600');
+                    button.classList.add('bg-green-500', 'hover:bg-green-600');
+                    alert(`✅ Dispositivo desativado!\nPlaca: ${data.placa}`);
+                } else {
+                    button.innerHTML = '🔇 Desativar';
+                    button.classList.remove('bg-green-500', 'hover:bg-green-600');
+                    button.classList.add('bg-red-500', 'hover:bg-red-600');
+                    alert(`✅ Comando enviado!\nPlaca: ${data.placa}\n\nO dispositivo está apitando agora.`);
+                }
+                
+                // Atualiza o atributo onclick
+                button.setAttribute('onclick', `toggleDispositivo(${motoId}, ${!isAtivo})`);
+                
+                // Recarrega a página após 1 segundo para atualizar o status visual
+                setTimeout(() => location.reload(), 1000);
+            } else {
+                alert('❌ Erro: ' + (data.erro || 'Erro desconhecido'));
+                button.innerHTML = originalText;
+            }
+        })
+        .catch(error => {
+            alert('❌ Erro de conexão: ' + error);
+            button.innerHTML = originalText;
+        })
+        .finally(() => {
+            button.disabled = false;
+        });
+    }
+</script>
 </body>
 </html>

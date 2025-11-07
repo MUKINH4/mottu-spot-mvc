@@ -48,7 +48,7 @@ public class MqttController {
             // Atualiza status do dispositivo no banco
             Dispositivo dispositivo = moto.getDispositivo();
             dispositivo.setAtivo(true);
-            dispositivoService.save(dispositivo);
+            dispositivoService.salvarDispositivo(dispositivo);
             
             Map<String, Object> response = new HashMap<>();
             response.put("sucesso", true);
@@ -82,7 +82,7 @@ public class MqttController {
             // Atualiza status do dispositivo no banco
             Dispositivo dispositivo = moto.getDispositivo();
             dispositivo.setAtivo(false);
-            dispositivoService.save(dispositivo);
+            dispositivoService.salvarDispositivo(dispositivo);
             
             return ResponseEntity.ok(Map.of(
                 "sucesso", true,
